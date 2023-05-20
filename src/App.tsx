@@ -1,7 +1,9 @@
 import * as esbuild from 'esbuild-wasm';
 import { useEffect, useState, useRef } from 'react';
+import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 
 function App() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>();
   const [code, setCode] = useState('');
   const [input, setInput] = useState('');
@@ -9,7 +11,7 @@ function App() {
   const startService = async () => {
     ref.current = await esbuild.startService({
       worker: true,
-      wasmURL: './esbuild.wasm',
+      wasmURL: '/esbuild.wasm',
     });
   };
 
@@ -20,12 +22,23 @@ function App() {
   const handleClick = async () => {
     if (!ref.current) return;
 
-    const result = await ref.current.transform(input, {
-      loader: 'jsx',
-      target: 'es2015',
+    // Work around for define.process.env.NODE_ENV for vite
+    const env = ['process', 'env', 'NODE_ENV'].join('.')
+
+    const result = await ref.current.build({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()],
+      define: {
+        [env]: '"production"',
+        global: 'window'
+      }
     });
 
-    setCode(result.code);
+    console.log(result);
+
+    setCode(result.outputFiles[0].text);
   };
 
   return (
