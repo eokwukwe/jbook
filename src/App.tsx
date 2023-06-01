@@ -7,7 +7,6 @@ function App() {
   const ref = useRef<any>();
   const iframeRef = useRef<any>();
 
-  const [code, setCode] = useState('');
   const [input, setInput] = useState('');
 
   const startEsbuildService = async () => {
@@ -27,6 +26,9 @@ function App() {
     // Work around for define.process.env.NODE_ENV for vite
     const env = ['process', 'env', 'NODE_ENV'].join('.');
 
+    // Reset the iframe document
+    iframeRef.current.srcdoc = iframeHTML;
+
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -44,13 +46,13 @@ function App() {
     );
   };
 
-  const html = `
+  const iframeHTML = `
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Iframe</title>
       </head>
       <body>
         <div id="root"></div>
@@ -61,7 +63,8 @@ function App() {
             } catch (error) {
               const rootEl = document.querySelector('#root');
               rootEl.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + error + '</div>';
-
+              
+              // Show the error on the console
               console.error(error);
             }
           }, false);
@@ -80,9 +83,12 @@ function App() {
         <button onClick={handleClick}>Submit</button>
       </div>
 
-      <pre>{code}</pre>
-
-      <iframe ref={iframeRef} sandbox='allow-scripts' srcDoc={html}></iframe>
+      <iframe
+        title='preview'
+        ref={iframeRef}
+        sandbox='allow-scripts'
+        srcDoc={iframeHTML}
+      ></iframe>
     </div>
   );
 }
