@@ -1,79 +1,18 @@
-import * as esbuild from 'esbuild-wasm';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 
+import bundler from './bundler';
+
+import Preview from './components/preview';
 import CodeEditor from './components/code-editor';
-import { fetchPlugin, unpkgPathPlugin } from './plugins';
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref = useRef<any>();
-  const iframeRef = useRef<any>();
-
+  const [code, setCode] = useState('');
   const [input, setInput] = useState('');
 
-  const startEsbuildService = async () => {
-    ref.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    });
-  };
-
-  useEffect(() => {
-    startEsbuildService();
-  }, []);
-
   const handleClick = async () => {
-    if (!ref.current) return;
-
-    // Work around for define.process.env.NODE_ENV for vite
-    const env = ['process', 'env', 'NODE_ENV'].join('.');
-
-    // Reset the iframe document
-    iframeRef.current.srcdoc = iframeHTML;
-
-    const result = await ref.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        [env]: '"production"',
-        global: 'window',
-      },
-    });
-
-    iframeRef.current.contentWindow.postMessage(
-      result.outputFiles[0].text,
-      '*'
-    );
+    const output = await bundler(input);
+    setCode(output);
   };
-
-  const iframeHTML = `
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Iframe</title>
-      </head>
-      <body>
-        <div id="root"></div>
-        <script>
-          window.addEventListener('message', (event) => {
-            try {
-              eval(event.data);
-            } catch (error) {
-              const rootEl = document.querySelector('#root');
-              rootEl.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + error + '</div>';
-              
-              // Show the error on the console
-              console.error(error);
-            }
-          }, false);
-        </script>
-      </body>
-    </html>
-  `;
 
   return (
     <div>
@@ -82,20 +21,11 @@ function App() {
         onChange={(value) => setInput(value)}
       />
 
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      ></textarea>
       <div>
         <button onClick={handleClick}>Submit</button>
       </div>
 
-      <iframe
-        title='preview'
-        ref={iframeRef}
-        sandbox='allow-scripts'
-        srcDoc={iframeHTML}
-      ></iframe>
+      <Preview code={code} />
     </div>
   );
 }
