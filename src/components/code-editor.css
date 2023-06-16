@@ -1,0 +1,22 @@
+.editor-wrapper {
+  position: relative;
+  height: 100%;
+  /* width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff; */
+}
+
+.editor-wrapper .button-format {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.editor-wrapper:hover .button-format {
+  opacity: 1;
+}
