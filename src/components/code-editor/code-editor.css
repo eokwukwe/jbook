@@ -1,11 +1,7 @@
 .editor-wrapper {
   position: relative;
   height: 100%;
-  /* width: 100%;
-  overflow: hidden;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #fff; */
+  width: calc(100% - 10px);
 }
 
 .editor-wrapper .button-format {
@@ -14,7 +10,7 @@
   right: 5px;
   z-index: 20;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s;
 }
 
 .editor-wrapper:hover .button-format {

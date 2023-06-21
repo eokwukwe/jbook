@@ -22,13 +22,15 @@
     "monaco-jsx-highlighter": "^2.0.4",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-resizable": "3.0.5"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.20.1",
     "@types/prettier": "^2.7.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/react-resizable": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react": "^4.0.0",

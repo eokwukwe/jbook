@@ -8,8 +8,8 @@ import { parse as babelParse } from '@babel/parser';
 import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
 import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react';
 
-import './syntax.css';
 import './code-editor.css';
+import './syntax-highlighter.css';
 
 interface CodeEditorProps {
   initialValue: string;
@@ -71,7 +71,7 @@ export default function CodeEditor({
         value={initialValue}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        height='500px'
+        height='100%'
         defaultLanguage='javascript'
         theme='vs-dark'
         options={{
