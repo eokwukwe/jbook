@@ -4,6 +4,7 @@ import './preview.css';
 
 interface PreviewProps {
   code: string;
+  error: string;
 }
 
 const iframeHTML = `
@@ -39,7 +40,7 @@ const iframeHTML = `
     </html>
   `;
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, error }) => {
   const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement>;
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         sandbox='allow-scripts'
         srcDoc={iframeHTML}
       />
+      {error && <div className='preview-error'>{error}</div>}
     </div>
   );
 };

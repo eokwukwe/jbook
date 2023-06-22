@@ -68,12 +68,12 @@ export default function CodeEditor({
         Format
       </button>
       <MonacoEditor
+        height='100%'
+        theme='vs-dark'
+        defaultLanguage='javascript'
         value={initialValue}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        height='100%'
-        defaultLanguage='javascript'
-        theme='vs-dark'
         options={{
           tabSize: 2,
           fontSize: 16,

@@ -15,15 +15,19 @@ async function bundler(rawCode: string) {
   // Work around for define.process.env.NODE_ENV for vite
   const env = ['process', 'env', 'NODE_ENV'].join('.');
 
-  const result = await service.build({
-    entryPoints: ['index.js'],
-    bundle: true,
-    write: false,
-    plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
-    define: { [env]: '"production"', global: 'window' },
-  });
+  try {
+    const result = await service.build({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
+      define: { [env]: '"production"', global: 'window' },
+    });
 
-  return result.outputFiles[0].text;
+    return { code: result.outputFiles[0].text, error: '' };
+  } catch (error) {
+    return { code: '', error: (error as Error).message };
+  }
 }
 
 export default bundler;
