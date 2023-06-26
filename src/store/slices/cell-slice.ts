@@ -27,38 +27,57 @@ const initialState: CellsState = {
   data: {},
 };
 
+const randomId = () => Math.random().toString(36).substring(2);
+
 export const cellSlice = createSlice({
   name: 'editor-cell',
   initialState,
   reducers: {
     updateCell: (
       state,
-      action: PayloadAction<{ id: string; content: string }>
+      { payload }: PayloadAction<{ id: string; content: string }>
     ) => {
-      state.data[action.payload.id] = {
-        type: 'code',
-        id: action.payload.id,
-        content: action.payload.content,
-      };
+      state.data[payload.id].content = payload.content;
     },
 
-    // moveCell: (
-    //   state,
-    //   action: PayloadAction<{ id: string; direction: CellDirections }>
-    // ) => {
-    //   return state;
-    // },
+    deleteCell: (state, { payload }: PayloadAction<{ id: string }>) => {
+      delete state.data[payload.id];
+      state.order = state.order.filter((id) => id !== payload.id);
+    },
 
-    // deleteCell: (state, action: PayloadAction<{ id: string }>) => {
-    //   return state;
-    // },
+    moveCell: (
+      state,
+      { payload }: PayloadAction<{ id: string; direction: CellDirections }>
+    ) => {
+      const index = state.order.findIndex((id) => id === payload.id);
+      const targetIndex = payload.direction === 'up' ? index - 1 : index + 1;
 
-    // insertCellBefore: (
-    //   state,
-    //   action: PayloadAction<{ id: string; type: CellTypes }>
-    // ) => {
-    //   return state;
-    // },
+      if (targetIndex < 0 || targetIndex > state.order.length - 1) return;
+
+      state.order[index] = state.order[targetIndex];
+      state.order[targetIndex] = payload.id;
+    },
+
+    insertCellBefore: (
+      state,
+      { payload }: PayloadAction<{ id: string; type: CellTypes }>
+    ) => {
+      const cell: Cell = {
+        id: randomId(),
+        type: payload.type,
+        content: '',
+      };
+
+      state.data[cell.id] = cell;
+
+      const foundIndex = state.order.findIndex((id) => id === payload.id);
+
+      if (foundIndex < 0) {
+        state.order.push(cell.id);
+      } else {
+        state.order.splice(foundIndex, 0, cell.id);
+      }
+    },
   },
 });
 
