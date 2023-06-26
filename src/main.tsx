@@ -1,7 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
+
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import App from './App.tsx';
 import store from './store';

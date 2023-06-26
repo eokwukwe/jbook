@@ -5,29 +5,45 @@ import Resizable from '../resizable';
 import CodeEditor from '../code-editor';
 
 import bundler from '../../bundler';
+import { useAppDispatch } from '../../hooks/redux-hooks';
+import { Cell, updateCell } from '../../store/slices/cell-slice';
 
-export default function CodeCell() {
+interface CodeCellProps {
+  cell: Cell;
+}
+
+export default function CodeCell({ cell }: CodeCellProps) {
+  const dispatch = useAppDispatch();
+
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
-  const [input, setInput] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundler(input);
+      const output = await bundler(cell.content);
+
       setCode(output.code);
       setError(output.error);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [input]);
+  }, [cell.content]);
 
   return (
     <Resizable direction='vertical'>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+      <div
+        style={{
+          height: 'calc(100% - 10px)',
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
         <Resizable direction='horizontal'>
           <CodeEditor
-            initialValue='const a = 1;'
-            onChange={(value) => setInput(value)}
+            initialValue={cell.content}
+            onChange={(value) =>
+              dispatch(updateCell({ id: cell.id, content: value }))
+            }
           />
         </Resizable>
         <Preview code={code} error={error} />

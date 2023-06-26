@@ -58,14 +58,14 @@ export const cellSlice = createSlice({
       state.order[targetIndex] = payload.id;
     },
 
-    insertCellBefore: (
+    insertCellAfter: (
       state,
-      { payload }: PayloadAction<{ id: string; type: CellTypes }>
+      { payload }: PayloadAction<{ id: string | null; type: CellTypes }>
     ) => {
       const cell: Cell = {
+        content: '',
         id: randomId(),
         type: payload.type,
-        content: '',
       };
 
       state.data[cell.id] = cell;
@@ -73,15 +73,16 @@ export const cellSlice = createSlice({
       const foundIndex = state.order.findIndex((id) => id === payload.id);
 
       if (foundIndex < 0) {
-        state.order.push(cell.id);
+        state.order.unshift(cell.id);
       } else {
-        state.order.splice(foundIndex, 0, cell.id);
+        state.order.splice(foundIndex + 1, 0, cell.id);
       }
     },
   },
 });
 
-export const { updateCell } = cellSlice.actions;
 export const selectCell = (state: RootState) => state.cells;
+export const { moveCell, updateCell, deleteCell, insertCellAfter } =
+  cellSlice.actions;
 
 export default cellSlice.reducer;
