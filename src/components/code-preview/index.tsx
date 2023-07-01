@@ -40,7 +40,7 @@ const iframeHTML = `
     </html>
   `;
 
-const Preview: React.FC<PreviewProps> = ({ code, error }) => {
+function Preview({ code, error }: PreviewProps) {
   const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement>;
 
   useEffect(() => {
@@ -66,6 +66,6 @@ const Preview: React.FC<PreviewProps> = ({ code, error }) => {
       {error && <div className='preview-error'>{error}</div>}
     </div>
   );
-};
+}
 
 export default Preview;

@@ -6,7 +6,7 @@ import CellListItem from '../cell-list-item';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { selectCells } from '../../store/slices/cell-slice';
 
-const CellList: React.FC = () => {
+function CellList() {
   const cells = useAppSelector(selectCells);
 
   const renderedCells = cells.map((cell) => (
@@ -22,6 +22,6 @@ const CellList: React.FC = () => {
       {renderedCells}
     </div>
   );
-};
+}
 
 export default CellList;
