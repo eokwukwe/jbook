@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import Preview from '../code-preview';
 import Resizable from '../resizable';
+import Preview from '../code-preview';
 import CodeEditor from '../code-editor';
 
-import bundler from '../../bundler';
-import { useAppDispatch } from '../../hooks/redux-hooks';
+import {
+  createBundle,
+  selectBundleByCellId,
+} from '../../store/slices/bundle-slice';
 import { Cell, updateCell } from '../../store/slices/cell-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+
+import './code-cell.css';
 
 interface CodeCellProps {
   cell: Cell;
@@ -15,19 +20,24 @@ interface CodeCellProps {
 export default function CodeCell({ cell }: CodeCellProps) {
   const dispatch = useAppDispatch();
 
-  const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const bundle = useAppSelector((state) =>
+    selectBundleByCellId(state.bundles, cell.id)
+  );
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      const output = await bundler(cell.content);
+    if (!bundle) {
+      dispatch(createBundle({ cellId: cell.id, input: cell.content }));
+      return;
+    }
 
-      setCode(output.code);
-      setError(output.error);
-    }, 1000);
+    const timer = setTimeout(async () => {
+      dispatch(createBundle({ cellId: cell.id, input: cell.content }));
+    }, 750);
 
     return () => clearTimeout(timer);
-  }, [cell.content]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cell.id, cell.content]);
 
   return (
     <Resizable direction='vertical'>
@@ -46,7 +56,16 @@ export default function CodeCell({ cell }: CodeCellProps) {
             }
           />
         </Resizable>
-        <Preview code={code} error={error} />
+
+        {!bundle || bundle.bundling ? (
+          <div className='progress-cover'>
+            <progress className='progress is-small is-primary' max='100'>
+              Loading
+            </progress>
+          </div>
+        ) : (
+          <Preview code={bundle.code} error={bundle.error} />
+        )}
       </div>
     </Resizable>
   );

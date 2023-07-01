@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../index';
 
@@ -81,8 +81,15 @@ export const cellSlice = createSlice({
   },
 });
 
-export const selectCell = (state: RootState) => state.cells;
+const selectData = (state: RootState) => state.cells.data;
+const selectOrder = (state: RootState) => state.cells.order;
+
 export const { moveCell, updateCell, deleteCell, insertCellAfter } =
   cellSlice.actions;
+
+export const selectCells = createSelector(
+  [selectOrder, selectData],
+  (order, data) => order.map((id) => data[id])
+);
 
 export default cellSlice.reducer;
