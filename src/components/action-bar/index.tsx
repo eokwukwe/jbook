@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useAppDispatch } from '../../hooks';
 import { deleteCell, moveCell } from '../../store/slices/cell-slice';
 
 import './action-bar.css';

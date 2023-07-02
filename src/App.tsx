@@ -1,11 +1,7 @@
 import CellList from './components/cell-list';
 
 function App() {
-  return (
-    <div>
-      <CellList />
-    </div>
-  );
+  return <CellList />;
 }
 
 export default App;

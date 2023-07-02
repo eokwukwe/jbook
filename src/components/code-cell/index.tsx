@@ -9,7 +9,7 @@ import {
   selectBundleByCellId,
 } from '../../store/slices/bundle-slice';
 import { Cell, updateCell } from '../../store/slices/cell-slice';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector, useCumulativeCode } from '../../hooks';
 
 import './code-cell.css';
 
@@ -24,20 +24,22 @@ export default function CodeCell({ cell }: CodeCellProps) {
     selectBundleByCellId(state.bundles, cell.id)
   );
 
+  const cumulativeCode = useCumulativeCode(cell.id);
+
   useEffect(() => {
     if (!bundle) {
-      dispatch(createBundle({ cellId: cell.id, input: cell.content }));
+      dispatch(createBundle({ cellId: cell.id, input: cumulativeCode }));
       return;
     }
 
     const timer = setTimeout(async () => {
-      dispatch(createBundle({ cellId: cell.id, input: cell.content }));
+      dispatch(createBundle({ cellId: cell.id, input: cumulativeCode }));
     }, 750);
 
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.id, cell.content]);
+  }, [cell.id, cumulativeCode]);
 
   return (
     <Resizable direction='vertical'>
@@ -57,15 +59,17 @@ export default function CodeCell({ cell }: CodeCellProps) {
           />
         </Resizable>
 
-        {!bundle || bundle.bundling ? (
-          <div className='progress-cover'>
-            <progress className='progress is-small is-primary' max='100'>
-              Loading
-            </progress>
-          </div>
-        ) : (
-          <Preview code={bundle.code} error={bundle.error} />
-        )}
+        <div className='progress-wrapper'>
+          {!bundle || bundle.bundling ? (
+            <div className='progress-cover'>
+              <progress className='progress is-small is-primary' max='100'>
+                Loading
+              </progress>
+            </div>
+          ) : (
+            <Preview code={bundle.code} error={bundle.error} />
+          )}
+        </div>
       </div>
     </Resizable>
   );

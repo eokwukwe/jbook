@@ -74,6 +74,7 @@ export default function CodeEditor({
         value={initialValue}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
+        loading='Loading editor...'
         options={{
           tabSize: 2,
           fontSize: 16,

@@ -22,6 +22,8 @@ async function bundler(rawCode: string) {
       write: false,
       plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
       define: { [env]: '"production"', global: 'window' },
+      jsxFactory: '_React.createElement',
+      jsxFragment: '_React.Fragment',
     });
 
     return { code: result.outputFiles[0].text, error: '' };

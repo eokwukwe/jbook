@@ -11,7 +11,7 @@ export interface Cell {
   content: string;
 }
 
-interface CellsState {
+export interface CellsState {
   order: string[];
   loading: boolean;
   error: string | null;
@@ -87,7 +87,7 @@ const selectOrder = (state: RootState) => state.cells.order;
 export const { moveCell, updateCell, deleteCell, insertCellAfter } =
   cellSlice.actions;
 
-export const selectCells = createSelector(
+export const selectOrderedCells = createSelector(
   [selectOrder, selectData],
   (order, data) => order.map((id) => data[id])
 );

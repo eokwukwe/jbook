@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useAppDispatch } from '../../hooks';
 import { insertCellAfter } from '../../store/slices/cell-slice';
 
 import './add-cell.css';

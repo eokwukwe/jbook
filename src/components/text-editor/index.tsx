@@ -1,7 +1,7 @@
 import MDEditor from '@uiw/react-md-editor';
 import { useState, useEffect, useRef } from 'react';
 
-import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useAppDispatch } from '../../hooks';
 import { Cell, updateCell } from '../../store/slices/cell-slice';
 
 import './text-editor.css';
