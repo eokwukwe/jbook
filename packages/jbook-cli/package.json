@@ -1,0 +1,19 @@
+{
+  "name": "jbook-cli",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "tsc --watch --preserveWatchOutput",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jbook-local-api": "file:../jbook-local-api"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3",
+    "typescript": "^5.0.2"
+  }
+}
