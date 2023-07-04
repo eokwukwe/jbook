@@ -16,7 +16,7 @@ function Resizable({ direction, children }: ResizableProps) {
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    let timer: number;
+    let timer: NodeJS.Timeout;
 
     const listener = () => {
       if (timer) {

@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^11.0.0",
-    "jbook-local-api": "file:../jbook-local-api"
+    "jbook-local-api": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.3.3",
