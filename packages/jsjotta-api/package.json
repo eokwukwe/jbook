@@ -1,6 +1,6 @@
 {
   "name": "@jsjotta/jsjotta-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "jsjotta local api",
   "main": "dist/index.js",
   "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
@@ -33,7 +33,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@jsjotta/jsjotta-client": "^1.0.0",
+    "@jsjotta/jsjotta-client": "^1.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"

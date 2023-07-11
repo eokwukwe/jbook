@@ -1,6 +1,6 @@
 {
   "name": "jsjotta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Jsjotta cli tool",
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -30,10 +30,10 @@
   "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@jsjotta/jsjotta-client": "^1.0.0"
+    "@jsjotta/jsjotta-client": "^1.0.1"
   },
   "devDependencies": {
-    "@jsjotta/jsjotta-api": "^1.0.0",
+    "@jsjotta/jsjotta-api": "^1.0.1",
     "@types/node": "^20.3.3",
     "commander": "^11.0.0",
     "esbuild": "^0.18.11",
