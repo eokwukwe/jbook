@@ -68,7 +68,7 @@ export default function CodeCell({ cell }: CodeCellProps) {
               </progress>
             </div>
           ) : (
-            <Preview code={bundle.code} error={bundle.error} cellId={cell.id} />
+            <Preview code={bundle.code} error={bundle.error} />
           )}
         </div>
       </div>
