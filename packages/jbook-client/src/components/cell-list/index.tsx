@@ -1,15 +1,23 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import AddCell from '../add-cell';
 import CellListItem from '../cell-list-item';
 
-import { useAppSelector } from '../../hooks';
-import { selectOrderedCells } from '../../store/slices/cell-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCells, selectOrderedCells } from '../../store/slices/cell-slice';
 
 import './cell-list.css';
 
 function CellList() {
+  const dispatch = useAppDispatch();
   const cells = useAppSelector(selectOrderedCells);
+
+  console.log('cells', cells);
+  
+
+  useEffect(() => {
+    dispatch(fetchCells());
+  }, [dispatch]);
 
   const renderedCells = cells.map((cell) => (
     <Fragment key={cell.id}>

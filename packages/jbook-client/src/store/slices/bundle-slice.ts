@@ -55,21 +55,21 @@ const bundlesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createBundle.pending, (state, action) => {
-      state[action.meta.arg.cellId] = {
-        bundling: true,
-        code: '',
-        error: '',
-      };
-    });
-
-    builder.addCase(createBundle.fulfilled, (state, action) => {
-      state[action.payload.cellId] = {
-        bundling: false,
-        code: action.payload.bundle.code,
-        error: action.payload.bundle.error,
-      };
-    });
+    builder
+      .addCase(createBundle.pending, (state, action) => {
+        state[action.meta.arg.cellId] = {
+          bundling: true,
+          code: '',
+          error: '',
+        };
+      })
+      .addCase(createBundle.fulfilled, (state, action) => {
+        state[action.payload.cellId] = {
+          bundling: false,
+          code: action.payload.bundle.code,
+          error: action.payload.bundle.error,
+        };
+      });
   },
 });
 

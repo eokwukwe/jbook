@@ -25,6 +25,7 @@ export default function CodeCell({ cell }: CodeCellProps) {
   );
 
   const cumulativeCode = useCumulativeCode(cell.id);
+  console.log('bundle', { cellId: cell.id, bundle, cumulativeCode });
 
   useEffect(() => {
     if (!bundle) {
@@ -67,7 +68,7 @@ export default function CodeCell({ cell }: CodeCellProps) {
               </progress>
             </div>
           ) : (
-            <Preview code={bundle.code} error={bundle.error} />
+            <Preview code={bundle.code} error={bundle.error} cellId={cell.id} />
           )}
         </div>
       </div>
