@@ -1,17 +1,22 @@
 {
-  "name": "jbook-cli",
+  "name": "jsjotta",
   "version": "1.0.0",
-  "description": "",
+  "description": "Jbook cli tool",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "node",
+    "jotta",
+    "javascript"
+  ],
+  "author": "Okwukwe Ewurum",
+  "license": "MIT",
   "dependencies": {
     "commander": "^11.0.0",
-    "jbook-local-api": "^1.0.0"
+    "@jsjotta/jsjotta-api": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.3.3",

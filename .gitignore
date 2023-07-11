@@ -2,3 +2,4 @@ node_modules/
 
 // add all dist folders in the packages directory
 packages/*/dist/
+packages/*/notebook.js

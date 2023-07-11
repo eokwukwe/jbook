@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+
 import { createCellsRouter } from './routes/cells';
 
 interface ServeProps {
@@ -13,6 +14,9 @@ interface ServeProps {
 export async function serve({ dir, isDev, port, filename }: ServeProps) {
   const app = express();
 
+  app.use(express.json());
+  app.use(createCellsRouter(filename, dir));
+
   if (isDev) {
     app.use(
       createProxyMiddleware({
@@ -22,12 +26,10 @@ export async function serve({ dir, isDev, port, filename }: ServeProps) {
       })
     );
   } else {
-    const modulePath = require.resolve('jbook-client/dist/index.html');
+    const modulePath = require.resolve('@jsjotta/jsjotta-client/dist/index.html');
+    
     app.use(express.static(path.dirname(modulePath)));
   }
-
-  app.use(express.json());
-  app.use(createCellsRouter(filename, dir));
 
   return new Promise<void>((resolve, reject) => {
     app.listen(port, resolve).on('error', reject);
