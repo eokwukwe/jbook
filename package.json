@@ -9,6 +9,6 @@
     "lerna": "^7.1.1"
   },
   "scripts": {
-    "start": "lerna run start --parallel"
+    "dev": "lerna run dev --parallel"
   }
 }

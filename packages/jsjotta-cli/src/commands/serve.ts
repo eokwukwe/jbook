@@ -12,28 +12,32 @@ export const serveCommand = new Command()
   .command('serve [filename]')
   .description('Open a file for editing')
   .option('-p, --port <number>', 'port to run server on', '4005')
-  .action(async (filename = 'notebook.js', options: { port: string }) => {
-    try {
-      const dir = path.join(process.cwd(), path.dirname(filename));
+  .action(
+    async (filename = 'jsjotta-intro.json', options: { port: string }) => {
+      try {
+        const dir = path.join(process.cwd(), path.dirname(filename));
 
-      await serve({
-        dir,
-        filename,
-        isDev: !isProduction,
-        port: parseInt(options.port),
-      });
+        await serve({
+          dir,
+          filename,
+          isDev: !isProduction,
+          port: parseInt(options.port),
+        });
 
-      console.log(
-        `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
-      );
-    } catch (error) {
-      const err = error as NodeError;
+        console.log(
+          `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
+        );
+      } catch (error) {
+        const err = error as NodeError;
 
-      if (err.code === 'EADDRINUSE') {
-        console.error('Port is in use. Try running on a different port.');
-      } else {
-        console.log('Heres the problem', err.message);
+        if (err.code === 'EADDRINUSE') {
+          console.error(
+            `😢 ERROR: Port ${options.port} is in use - try running on a different port using 'j-scribe serve -p <your-port-here>'`
+          );
+        } else {
+          console.log('Heres the problem', err.message);
+        }
+        process.exit(1);
       }
-      process.exit(1);
     }
-  });
+  );

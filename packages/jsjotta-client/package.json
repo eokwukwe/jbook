@@ -1,10 +1,12 @@
 {
   "name": "@jsjotta/jsjotta-client",
-  "private": false,
   "version": "1.0.0",
   "type": "module",
   "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "react",
     "node",
@@ -23,7 +25,8 @@
     "start": "npm run dev",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@babel/parser": "^7.22.5",

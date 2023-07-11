@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
@@ -19,8 +22,9 @@
     "url": "git+https://github.com/eokwukwe/jsjotta.git"
   },
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc -w --preserveWatchOutput",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
