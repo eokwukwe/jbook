@@ -3,13 +3,21 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "author": "Okwukwe Ewurum",
+  "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
   "license": "MIT",
   "keywords": [
     "react",
     "node",
     "jsjotta"
   ],
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/eokwukwe/jsjotta#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eokwukwe/jsjotta.git"
+  },
   "scripts": {
     "dev": "vite --port 3030",
     "start": "npm run dev",

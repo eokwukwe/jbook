@@ -1,7 +1,20 @@
 {
   "name": "jsjotta",
   "version": "1.0.0",
-  "description": "Jbook cli tool",
+  "description": "Jsjotta cli tool",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/eokwukwe/jsjotta#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eokwukwe/jsjotta.git"
+  },
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +25,7 @@
     "jotta",
     "javascript"
   ],
-  "author": "Okwukwe Ewurum",
+  "author": "Okwukwe Ewurum <okwukwe.ewurum@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "commander": "^11.0.0",
